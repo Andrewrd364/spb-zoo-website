@@ -3,21 +3,22 @@ const cors = require('cors');
 require('dotenv').config();
 const sequelize = require('./models/db.js');
 const router = require('./routes/index.js')
+const fileUpload = require('express-fileupload')
+const path = require('path')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
 
 app.use(cors({ origin: 'http://localhost:3000' }));
 app.use(express.json());
+app.use(express.static(path.resolve(__dirname, 'static')))
+app.use(fileUpload({}));
 app.use('/api', router)
-
-// Пример маршрута
-app.get('/', (req, res) => {
-  res.send('API работает!!!!!');
-});
 
 const start = async () => {
     try{
+        console.log(typeof process.env.DB_PASSWORD); // Должно быть "string"
+
         await sequelize.authenticate()
         await sequelize.sync();
         // await sequelize.sync({ force: true });
