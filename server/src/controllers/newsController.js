@@ -1,4 +1,7 @@
 const { News, NewsCategory } = require('../models/models');
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid');
 
 // Получить все новости с пагинацией и фильтрацией по категории
 exports.getAllNews = async (req, res) => {
@@ -39,10 +42,19 @@ exports.getAllNews = async (req, res) => {
 
 // Создать новость
 exports.createNews = async (req, res) => {
-  const { title, content, imageUrl, category } = req.body;
+  const { title, content, category, animalId } = req.body;
+  let imageUrl = null;
 
   try {
-    const newsCategory = await NewsCategory.findOne({ where: { category } });
+    // Если есть прикрепленный файл, сохраняем его
+    if (req.files && req.files.imageUrl) {
+      const img = req.files.imageUrl;
+      const fileName = uuid.v4() + ".jpg";
+      img.mv(path.resolve(__dirname, '..', 'static', fileName));
+      imageUrl = fileName;
+    }
+
+    const newsCategory = await NewsCategory.findByPk(category);
     if (!newsCategory) {
       return res.status(404).json({ message: 'Категория не найдена' });
     }
@@ -51,7 +63,8 @@ exports.createNews = async (req, res) => {
       title,
       content,
       imageUrl,
-      newsCategoryId: newsCategory.id
+      newsCategoryId: newsCategory.id,
+      animalId
     });
 
     res.status(201).json(news);
@@ -63,7 +76,8 @@ exports.createNews = async (req, res) => {
 // Обновить новость
 exports.updateNews = async (req, res) => {
   const { id } = req.params;
-  const { title, content, imageUrl, category } = req.body;
+  const { title, content, category, animalId } = req.body;
+  let imageUrl = null;
 
   try {
     const news = await News.findByPk(id);
@@ -71,15 +85,35 @@ exports.updateNews = async (req, res) => {
       return res.status(404).json({ message: 'Новость не найдена' });
     }
 
-    const newsCategory = await NewsCategory.findOne({ where: { category } });
+    const newsCategory = await NewsCategory.findByPk(category);
     if (!newsCategory) {
       return res.status(404).json({ message: 'Категория не найдена' });
     }
 
-    news.title = title;
-    news.content = content;
-    news.imageUrl = imageUrl;
+    // Проверяем, если есть новое изображение, заменяем старое
+    if (req.files && req.files.imageUrl) {
+      const oldImg = news.imageUrl;
+      const img = req.files.imageUrl;
+      const fileName = uuid.v4() + ".jpg";
+
+      // Удаляем старое изображение, если оно существует
+      if (oldImg) {
+        const oldImgPath = path.resolve(__dirname, '..', 'static', oldImg);
+        if (fs.existsSync(oldImgPath)) {
+          fs.unlinkSync(oldImgPath);
+        }
+      }
+
+      img.mv(path.resolve(__dirname, '..', 'static', fileName));
+      imageUrl = fileName;
+    }
+
+    // Обновляем данные
+    news.title = title || news.title;
+    news.content = content || news.content;
+    news.imageUrl = imageUrl || news.imageUrl;
     news.newsCategoryId = newsCategory.id;
+    news.animalId = animalId || news.animalId;
 
     await news.save();
     res.json(news);
@@ -98,8 +132,16 @@ exports.deleteNews = async (req, res) => {
       return res.status(404).json({ message: 'Новость не найдена' });
     }
 
+    // Удаляем изображение, если оно существует
+    if (news.imageUrl) {
+      const imgPath = path.resolve(__dirname, '..', 'static', news.imageUrl);
+      if (fs.existsSync(imgPath)) {
+        fs.unlinkSync(imgPath);
+      }
+    }
+
     await news.destroy();
-    res.json({ message: 'Новость удалена' });
+    res.json({ message: 'Новость и изображение успешно удалены' });
   } catch (error) {
     res.status(500).json({ message: 'Ошибка при удалении новости', error });
   }

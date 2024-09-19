@@ -1,4 +1,7 @@
 const { Souvenir, SouvenirCategory } = require('../models/models');
+const fs = require('fs');
+const path = require('path');
+const uuid = require('uuid');
 
 // Получить все сувениры с пагинацией и фильтрацией по категории
 exports.getAllSouvenirs = async (req, res) => {
@@ -57,18 +60,33 @@ exports.createSouvenir = async (req, res) => {
   const { name, description, inStock, categoryId } = req.body;
 
   try {
+    let imageUrl = null;
+
+    // Если в запросе есть файл изображения
+    if (req.files && req.files.imageUrl) {
+      const file = req.files.imageUrl;
+      const fileName = uuid.v4() + ".jpg";
+      const filePath = path.resolve(__dirname, '..', 'static', fileName);
+      await file.mv(filePath);
+      imageUrl = fileName;  // Присваиваем новое имя файла
+    }
+
+    // Создаем новый сувенир
     const newSouvenir = await Souvenir.create({
       name,
       description,
       inStock,
-      souvenirCategoryId: categoryId
+      souvenirCategoryId: categoryId,
+      imageUrl
     });
+
     return res.status(201).json(newSouvenir);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Ошибка при создании сувенира' });
+    return res.status(500).json({ message: 'Ошибка при создании сувенира', error });
   }
 };
+
 
 // Обновить существующий сувенир
 exports.updateSouvenir = async (req, res) => {
@@ -76,35 +94,66 @@ exports.updateSouvenir = async (req, res) => {
 
   try {
     const souvenir = await Souvenir.findByPk(req.params.id);
-    if (souvenir) {
-      await souvenir.update({
-        name,
-        description,
-        inStock,
-        souvenirCategoryId: categoryId
-      });
-      return res.json(souvenir);
-    } else {
+
+    if (!souvenir) {
       return res.status(404).json({ message: 'Сувенир не найден' });
     }
+
+    let imageUrl = souvenir.imageUrl;
+
+    // Если передан новый файл изображения
+    if (req.files && req.files.imageUrl) {
+      const oldFilePath = path.resolve(__dirname, '..', 'static', souvenir.imageUrl);
+      
+      // Удаляем старый файл, если он существует
+      if (fs.existsSync(oldFilePath)) {
+        fs.unlinkSync(oldFilePath);
+      }
+
+      const file = req.files.imageUrl;
+      const newFileName = uuid.v4() + ".jpg";
+      const newFilePath = path.resolve(__dirname, '..', 'static', newFileName);
+      await file.mv(newFilePath);
+      imageUrl = newFileName;  // Присваиваем новое имя файла
+    }
+
+    // Обновляем сувенир
+    await souvenir.update({
+      name,
+      description,
+      inStock,
+      souvenirCategoryId: categoryId,
+      imageUrl
+    });
+
+    return res.status(200).json(souvenir);
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Ошибка при обновлении сувенира' });
+    return res.status(500).json({ message: 'Ошибка при обновлении сувенира', error });
   }
 };
-
 // Удалить сувенир
 exports.deleteSouvenir = async (req, res) => {
   try {
     const souvenir = await Souvenir.findByPk(req.params.id);
-    if (souvenir) {
-      await souvenir.destroy();
-      return res.status(200).json({ message: 'Сувенир успешно удален' });
-    } else {
+
+    if (!souvenir) {
       return res.status(404).json({ message: 'Сувенир не найден' });
     }
+
+    // Удаляем изображение, если оно существует
+    if (souvenir.imageUrl) {
+      const filePath = path.resolve(__dirname, '..', 'static', souvenir.imageUrl);
+      if (fs.existsSync(filePath)) {
+        fs.unlinkSync(filePath);
+      }
+    }
+
+    // Удаляем сам сувенир
+    await souvenir.destroy();
+    return res.status(200).json({ message: 'Сувенир успешно удален' });
   } catch (error) {
     console.error(error);
-    return res.status(500).json({ message: 'Ошибка при удалении сувенира' });
+    return res.status(500).json({ message: 'Ошибка при удалении сувенира', error });
   }
 };

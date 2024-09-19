@@ -17,8 +17,6 @@ app.use('/api', router)
 
 const start = async () => {
     try{
-        console.log(typeof process.env.DB_PASSWORD); // Должно быть "string"
-
         await sequelize.authenticate()
         await sequelize.sync();
         // await sequelize.sync({ force: true });

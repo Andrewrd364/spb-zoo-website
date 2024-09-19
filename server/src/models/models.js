@@ -75,7 +75,8 @@ const Souvenir = sequelize.define('souvenir', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, unique: true, allowNull: false },
   description: { type: DataTypes.TEXT, allowNull: false },
-  inStock: { type: DataTypes.BOOLEAN, allowNull: false }
+  inStock: { type: DataTypes.BOOLEAN, allowNull: false },
+  imageUrl: { type: DataTypes.STRING, allowNull: false }
 });
 
 const SouvenirCategory = sequelize.define('souvenir_category', {
@@ -221,14 +222,16 @@ async function seedDatabase() {
     name: 'Elephant Plush Toy',
     description: 'A soft toy elephant.',
     inStock: true,
-    souvenirCategoryId: souvenirCategory1.id
+    souvenirCategoryId: souvenirCategory1.id,
+    imageUrl: 'asdasd123123'
   });
 
   await Souvenir.create({
     name: 'Zoo T-shirt',
     description: 'A T-shirt with the zoo logo.',
     inStock: true,
-    souvenirCategoryId: souvenirCategory2.id
+    souvenirCategoryId: souvenirCategory2.id,
+    imageUrl: 'asdasd123123'
   });
 
   console.log('Database has been seeded successfully.');
