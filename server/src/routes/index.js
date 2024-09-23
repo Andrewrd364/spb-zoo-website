@@ -11,6 +11,7 @@ const ticketRouter = require('./ticketRouter.js')
 const newsCategoriesRouter = require('./newsCategoriesRouter.js')
 const souvenirRouter = require('./souvenirRouter.js')
 const souvenirCategoriesRouter = require('./souvenirCategoriesRouter.js')
+const userRouter = require('./userRouter.js')
 
 router.use('/animal', animalRouter)
 router.use('/species', speciesRouter)
@@ -23,5 +24,6 @@ router.use('/ticket', ticketRouter)
 router.use('/newsCategories', newsCategoriesRouter)
 router.use('/souvenir', souvenirRouter)
 router.use('/souvenirCategories', souvenirCategoriesRouter)
+router.use('/user', userRouter)
 
 module.exports = router
