@@ -1,0 +1,30 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  #root {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+  
+  .App {
+    flex: 1;
+    padding-bottom: 50px; /* Отступ снизу для пространства между контентом и футером */
+  }
+  
+  .footer {
+    background-color: #b8b06b;
+    padding: 20px;
+    font-size: 14px;
+    color: #4d4d33;
+    text-align: center;
+    position: relative;
+    bottom: 0;
+    width: 100%;
+  }
+  

@@ -1,0 +1,22 @@
+.custom-navbar {
+    background-color: #b8b06b; /* Используем такой же цвет фона, как и у футера */
+    padding: 10px 0;
+  }
+  
+  .custom-navbar .navbar-nav .nav-link {
+    color: #4d4d33; /* Цвет текста */
+  }
+  
+  .custom-navbar .navbar-brand {
+    color: #4d4d33; /* Цвет бренда */
+  }
+  
+  .custom-navbar .navbar-toggler {
+    border-color: #4d4d33;
+  }
+  
+  .custom-navbar .nav-link:hover, 
+  .custom-navbar .navbar-brand:hover {
+    color: #23261f; /* Темнее при наведении */
+  }
+  
