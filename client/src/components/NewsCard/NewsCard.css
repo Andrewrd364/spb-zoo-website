@@ -1,5 +1,5 @@
 .news-card {
-    border: none;
+    border: 1px solid black;
     display: flex;
     align-items: center;
     transition: transform 0.2s ease-in-out;
@@ -27,4 +27,13 @@
     font-size: 1.2rem;
     font-weight: bold;
     color: #333;
+}
+
+.news-date {
+    font-size: 16px;
+    color: gray;
+    position: absolute;
+    right: 30px;
+    top: 50%;
+    transform: translateY(-50%);
 }

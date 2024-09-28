@@ -96,6 +96,16 @@ export const fetchNewsCategories = async () => {
   return response.data;
 };
 
+export const fetchNewsById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/news/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении новости', error);
+    throw error;
+  }
+};
+
 export const fetchTickets = async () => {
   try {
     const response = await axios.get(`${API_URL}/ticket`);

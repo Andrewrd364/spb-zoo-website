@@ -17,6 +17,7 @@ import AnimalDetailPage from "./pages/AnimalDetailPage";
 import ServicesPage from "./pages/ServicePage";
 import SouvenirsPage from "./pages/SouvenirsPage"
 import SouvenirDetailPage from "./pages/SouvenirDetailPage"
+import NewsDetailPage from "./pages/NewsDetailPage";
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/guardianship" element={<GuardianshipPage />} />
             <Route path="/tickets" element={<TicketsPage />} />
             <Route path="/news" element={<NewsPage />} />
+            <Route path="/news/:id" element={<NewsDetailPage />} />
             <Route path="/admin" element={<AdminPage />} />
             <Route path="/animals" element={<AnimalsPage />} />
             <Route path="/animals/:id" element={<AnimalDetailPage />} />

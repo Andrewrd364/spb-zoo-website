@@ -61,7 +61,7 @@ const Service = sequelize.define('service', {
 const Ticket = sequelize.define('ticket', {
   id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
   name: { type: DataTypes.STRING, allowNull: false, unique: true },
-  description: { type: DataTypes.TEXT, allowNull: false },
+  description: { type: DataTypes.TEXT, allowNull: true },
   price: { type: DataTypes.DECIMAL(10, 2) }
 })
 

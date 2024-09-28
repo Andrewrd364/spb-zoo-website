@@ -51,8 +51,8 @@ function TicketsPage() {
           {tickets.map(ticket => (
             <tr key={ticket.id}>
               <td>{ticket.name}</td>
-              <td>{ticket.description}</td>
-              <td>{ticket.price}₽</td>
+              <td>{ticket.description || 'Нет описания'}</td> {/* Проверка на наличие описания */}
+              <td>{ticket.price !== null ? `${ticket.price}₽` : 'Бесплатно'}</td> {/* Проверка на наличие цены */}
             </tr>
           ))}
         </tbody>

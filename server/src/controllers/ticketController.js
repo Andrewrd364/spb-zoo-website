@@ -41,13 +41,13 @@ exports.getTicketById = async (req, res) => {
 
 // Создать новый билет
 exports.createTicket = async (req, res) => {
-  const { name, description, price } = req.body;
+  const { name, description = null, price } = req.body;
 
   try {
     const newTicket = await Ticket.create({
       name,
-      description,
-      price,
+      description: description || null, // Присваиваем null, если description не указано или пусто
+      price: price || null,
     });
 
     return res.status(201).json(newTicket);
@@ -59,7 +59,7 @@ exports.createTicket = async (req, res) => {
 
 // Обновить билет по ID
 exports.updateTicket = async (req, res) => {
-  const { name, description, price } = req.body;
+  const { name, description = null, price } = req.body;
 
   try {
     const ticket = await Ticket.findByPk(req.params.id);
@@ -70,8 +70,8 @@ exports.updateTicket = async (req, res) => {
 
     await ticket.update({
       name,
-      description,
-      price,
+      description: description || null, // Присваиваем null, если description не указано или пусто
+      price: price || null,
     });
 
     return res.status(200).json(ticket);

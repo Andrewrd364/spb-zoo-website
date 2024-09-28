@@ -59,12 +59,13 @@ exports.createNews = async (req, res) => {
       return res.status(404).json({ message: 'Категория не найдена' });
     }
 
+    // Передаем null для animalId, если оно не передано или пустое
     const news = await News.create({
       title,
       content,
       imageUrl,
       newsCategoryId: newsCategory.id,
-      animalId
+      animalId: animalId || null // Проверяем, есть ли animalId, иначе передаем null
     });
 
     res.status(201).json(news);
@@ -113,7 +114,9 @@ exports.updateNews = async (req, res) => {
     news.content = content || news.content;
     news.imageUrl = imageUrl || news.imageUrl;
     news.newsCategoryId = newsCategory.id;
-    news.animalId = animalId || news.animalId;
+
+    // Передаем null для animalId, если оно не передано или пустое
+    news.animalId = animalId || null;
 
     await news.save();
     res.json(news);

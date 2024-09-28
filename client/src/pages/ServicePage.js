@@ -46,7 +46,7 @@ function ServicesPage() {
               src={`${IMAGE_URL}${service.imageUrl}`}
               alt={service.title}
               className="img-fluid rounded shadow-sm"
-              style={{ maxHeight: "auto", objectFit: "contain", width: "100%" }}
+              style={{ maxHeight: "auto", objectFit: "contain", width: "100%", border: "1px solid black" }}
             />
           </div>
 
