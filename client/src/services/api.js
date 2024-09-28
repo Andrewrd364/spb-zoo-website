@@ -81,31 +81,37 @@ export const fetchAnimalById = async (id) => {
   return response.data;
 };
 
-export const fetchNews = async (page = 1, category = "") => {
+export const fetchNews = async (category = "") => {
+  const response = await axios.get(`${API_URL}/news`, {
+    params: {
+      category, // добавляем параметр категории
+    },
+  });
+  return response.data;
+};
+
+// Функция для получения списка категорий
+export const fetchNewsCategories = async () => {
+  const response = await axios.get(`${API_URL}/newsCategories`);
+  return response.data;
+};
+
+export const fetchTickets = async () => {
   try {
-    const response = await axios.get(`${API_URL}/news`, {
-      params: {
-        page,
-        category, // передаем категорию как параметр
-      },
-    });
-    return {
-      data: response.data.data,
-      totalPages: response.data.totalPages,
-    };
+    const response = await axios.get(`${API_URL}/ticket`);
+    return response.data;
   } catch (error) {
-    console.error("Error fetching news:", error);
-    return { data: [], totalPages: 1 };
+    console.error("Error fetching tickets:", error);
+    throw error;
   }
 };
 
-// Запрос на получение категорий новостей
-export const fetchNewsCategories = async () => {
+export const fetchGuardianships = async () => {
   try {
-    const response = await axios.get(`${API_URL}/news-categories`);
+    const response = await axios.get(`${API_URL}/guardianship`);
     return response.data;
   } catch (error) {
-    console.error("Error fetching news categories:", error);
-    return [];
+    console.error("Error fetching guardianships:", error);
+    throw error;
   }
 };

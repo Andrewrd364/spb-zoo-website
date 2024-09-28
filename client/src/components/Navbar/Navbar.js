@@ -26,6 +26,7 @@ function Navbar() {
               <NavDropdown.Item as={Link} to="/hours">Часы работы</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/directions">Схема проезда</NavDropdown.Item>
               <NavDropdown.Item as={Link} to="/map">Карта зоопарка</NavDropdown.Item>
+              <NavDropdown.Item as={Link} to="/souvenirs">Сувениры</NavDropdown.Item>
             </NavDropdown>
 
             <ServiceDropdown />

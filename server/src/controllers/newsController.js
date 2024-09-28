@@ -12,7 +12,7 @@ exports.getAllNews = async (req, res) => {
 
   // Если категория указана, добавляем её в запрос
   if (category) {
-    const newsCategory = await NewsCategory.findOne({ where: { category } });
+    const newsCategory = await NewsCategory.findByPk(category)
     if (newsCategory) {
       whereClause = { newsCategoryId: newsCategory.id };
     } else {

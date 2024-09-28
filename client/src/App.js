@@ -2,7 +2,7 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
-import './App.css';  // Убедитесь, что App.css подключен
+import './App.css';  
 import LoginPage from "./pages/LoginPage";
 import EventsPage from "./pages/EventsPage";
 import HoursPage from "./pages/HoursPage";
@@ -15,6 +15,8 @@ import AdminPage from "./pages/AdminPage";
 import AnimalsPage from "./pages/AnimalsPage";
 import AnimalDetailPage from "./pages/AnimalDetailPage";
 import ServicesPage from "./pages/ServicePage";
+import SouvenirsPage from "./pages/SouvenirsPage"
+import SouvenirDetailPage from "./pages/SouvenirDetailPage"
 
 function App() {
   return (
@@ -36,6 +38,8 @@ function App() {
             <Route path="/animals" element={<AnimalsPage />} />
             <Route path="/animals/:id" element={<AnimalDetailPage />} />
             <Route path="/service/:id" element={<ServicesPage />} />
+            <Route path="/souvenirs" element={<SouvenirsPage />} />
+            <Route path="/souvenirs/:id" element={<SouvenirDetailPage />} />
           </Routes>
         </div>
 

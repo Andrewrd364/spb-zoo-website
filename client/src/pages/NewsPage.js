@@ -1,34 +1,42 @@
 import React, { useState, useEffect } from "react";
 import { Form, Row, Col } from "react-bootstrap";
-import NewsCard from "../components/NewsCard/NewsCard"
+import NewsCard from "../components/NewsCard/NewsCard";
 import { fetchNews, fetchNewsCategories } from "../services/api"; 
 
 function NewsPage() {
-  const [newsList, setNewsList] = useState([]);
-  const [categories, setCategories] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [totalPages, setTotalPages] = useState(1);
+  const [newsList, setNewsList] = useState([]); // Список новостей
+  const [categories, setCategories] = useState([]); // Список категорий
+  const [selectedCategory, setSelectedCategory] = useState(""); // Выбранная категория
 
+  // Загружаем новости и категории при загрузке страницы или при изменении категории
   useEffect(() => {
     const loadNews = async () => {
-      const newsData = await fetchNews(currentPage, selectedCategory);
-      setNewsList(newsData.data);
-      setTotalPages(newsData.totalPages);
+      try {
+        // Получаем все новости с учетом текущей категории
+        const newsData = await fetchNews(selectedCategory);
+        setNewsList(newsData.data); // Устанавливаем список новостей
+      } catch (error) {
+        console.error("Error fetching news:", error);
+      }
     };
 
     const loadCategories = async () => {
-      const categoriesData = await fetchNewsCategories();
-      setCategories(categoriesData);
+      try {
+        // Загружаем категории новостей
+        const categoriesData = await fetchNewsCategories();
+        setCategories(categoriesData); // Устанавливаем список категорий
+      } catch (error) {
+        console.error("Error fetching categories:", error);
+      }
     };
 
-    loadNews();
-    loadCategories();
-  }, [selectedCategory, currentPage]);
+    loadNews(); // Загружаем новости
+    loadCategories(); // Загружаем категории
+  }, [selectedCategory]); // Перезагрузка при изменении категории
 
+  // Обработчик изменения категории в фильтре
   const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value);
-    setCurrentPage(1); 
+    setSelectedCategory(event.target.value); // Устанавливаем выбранную категорию
   };
 
   return (
@@ -44,9 +52,11 @@ function NewsPage() {
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
+            {/* Опция для всех категорий */}
             <option value="">Все категории</option>
+            {/* Отображаем категории, загруженные из API */}
             {categories.map((category) => (
-              <option key={category.id} value={category.category}>
+              <option key={category.id} value={category.id}>
                 {category.category}
               </option>
             ))}
@@ -62,19 +72,6 @@ function NewsPage() {
           </Col>
         ))}
       </Row>
-
-      {/* Пагинация */}
-      <div className="pagination mt-3">
-        {Array.from({ length: totalPages }).map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentPage(index + 1)}
-            className={`btn btn-primary mx-1 ${currentPage === index + 1 ? "active" : ""}`}
-          >
-            {index + 1}
-          </button>
-        ))}
-      </div>
     </div>
   );
 }
