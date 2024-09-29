@@ -39,7 +39,7 @@ function AnimalsPage() {
 
   return (
     <div className="container mt-4">
-      <h1>Животные</h1>
+      <h1 style={{ marginBottom: '50px' }}>Животные</h1>
 
       {/* Filter Form */}
       <Form>

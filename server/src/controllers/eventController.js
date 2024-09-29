@@ -43,7 +43,7 @@ exports.createEvent = async (req, res) => {
     }
 
     // Проверяем, указан ли id животного
-    const eventData = {title, description, date, price, imageUrl: fileName ? fileName : null, animalId: animalId || null,};
+    const eventData = {title, description, date, price: price || null, imageUrl: fileName ? fileName : null, animalId: animalId || null,};
 
     // Создаём событие с указанными данными
     const event = await Event.create(eventData);
@@ -71,7 +71,7 @@ exports.updateEvent = async (req, res) => {
     event.title = title;
     event.description = description;
     event.date = date;
-    event.price = price;
+    event.price = price || null;
 
     // Если указан animalId, обновить его
     if (animalId) {

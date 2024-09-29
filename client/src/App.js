@@ -18,6 +18,8 @@ import ServicesPage from "./pages/ServicePage";
 import SouvenirsPage from "./pages/SouvenirsPage"
 import SouvenirDetailPage from "./pages/SouvenirDetailPage"
 import NewsDetailPage from "./pages/NewsDetailPage";
+import EventDetailPage from "./pages/EventDetailPage";
+import VacancyPage from "./pages/VacancyPage"
 
 function App() {
   return (
@@ -29,7 +31,9 @@ function App() {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/event/:id" element={<EventDetailPage />} />
             <Route path="/hours" element={<HoursPage />} />
+            <Route path="/vacancies" element={<VacancyPage />} />
             <Route path="/directions" element={<DirectionsPage />} />
             <Route path="/map" element={<MapPage />} />
             <Route path="/guardianship" element={<GuardianshipPage />} />

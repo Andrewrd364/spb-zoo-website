@@ -24,7 +24,7 @@ function NewsDetailPage() {
   }, [id]);
 
   if (loading) {
-    return <div>Загрузка...</div>;
+    return <div></div>;
   }
 
   if (!news) {

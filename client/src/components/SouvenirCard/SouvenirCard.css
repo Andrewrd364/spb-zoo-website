@@ -1,0 +1,72 @@
+.souvenir-card-container {
+    position: relative;
+    max-width: 300px; /* Ограничиваем ширину карточки */
+}
+
+.souvenir-card {
+    border: 1px solid black;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    transition: transform 0.2s ease-in-out;
+    background-color: #f8f9fa;
+    border-radius: 10px;
+    overflow: hidden;
+    height: 350px; /* Фиксируем высоту всех карточек */
+}
+
+.souvenir-card:hover {
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.souvenir-image {
+    object-fit: cover;
+    height: 200px;
+    width: 100%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+}
+
+.souvenir-body {
+    padding: 10px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Устанавливаем правильный отступ между элементами */
+    flex-grow: 1;
+}
+
+.souvenir-card .card-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    color: #333;
+    margin-bottom: 10px;
+    /* Ограничиваем количество строк заголовка */
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.souvenir-status {
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.description-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    background-color: rgba(255, 255, 255, 0.5); /* Полупрозрачный белый фон */
+    z-index: 1; /* Поверх карточки */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.description-overlay .card-body {
+    padding: 0;
+}

@@ -37,7 +37,7 @@ function TicketsPage() {
 
   return (
     <div className="container mt-4">
-      <h1>Билеты</h1>
+      <h1 style={{ marginBottom: '50px' }}>Билеты</h1>
       
       <Table striped bordered hover>
         <thead>

@@ -37,12 +37,21 @@ export const getServiceById = async (id) => {
 };
 
 
-export const getEvents = async () => {
+export const fetchEvents = async () => {
   try {
-    const response = await axios.get(`${API_URL}/events`);
+    const response = await axios.get(`${API_URL}/event/`);
     return response.data;
   } catch (error) {
-    console.error("Ошибка при загрузке мероприятий:", error);
+    console.error('Ошибка при получении мероприятий:', error);
+    throw error;
+  }
+};
+export const fetchEventById = async (id) => {
+  try {
+    const response = await axios.get(`${API_URL}/event/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении данных мероприятия:', error);
     throw error;
   }
 };
@@ -123,5 +132,48 @@ export const fetchGuardianships = async () => {
   } catch (error) {
     console.error("Error fetching guardianships:", error);
     throw error;
+  }
+};
+
+export const fetchSouvenirs = async (page = 1, category = "", limit = 12, inStock = null) => {
+  let url = `${API_URL}/souvenir?page=${page}&limit=${limit}`;
+  
+  if (category) {
+    url += `&category=${category}`;
+  }
+  
+  if (inStock !== null) {
+    url += `&inStockOnly=${inStock}`;
+  }
+  
+  try {
+    const response = await axios.get(url);
+    return response.data;
+  } catch (error) {
+    console.error('Ошибка при получении сувениров:', error);
+    throw error;
+  }
+};
+
+// Запрос для получения категорий сувениров
+export const fetchSouvenirCategories = async () => {
+  try {
+    const response = await axios.get(`${API_URL}/souvenirCategories`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching souvenir categories:", error);
+    return [];
+  }
+};
+
+export const fetchVacancies = async () => {
+  try {
+      const response = await axios.get(`${API_URL}/vacancy`);
+      return {
+          data: response.data.data,
+      };
+  } catch (error) {
+      console.error("Error fetching vacancies:", error);
+      return { data: [] };
   }
 };

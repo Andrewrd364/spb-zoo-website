@@ -7,5 +7,8 @@ router.get('/', souvenirCategoryController.getAllSouvenirCategories);
 
 // Роут для получения одной категории по ID
 router.get('/:id', souvenirCategoryController.getSouvenirCategoryById);
+router.put('/:id', souvenirCategoryController.updateSouvenirCategory);
+router.post('/', souvenirCategoryController.createSouvenirCategory);
+router.delete('/:id', souvenirCategoryController.deleteSouvenirCategory);
 
 module.exports = router;

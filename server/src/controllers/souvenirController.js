@@ -5,38 +5,48 @@ const uuid = require('uuid');
 
 // Получить все сувениры с пагинацией и фильтрацией по категории
 exports.getAllSouvenirs = async (req, res) => {
-  const { page = 1, limit = 10, category } = req.query;
+  const { page = 1, limit = 10, category, inStockOnly = false } = req.query;
   const offset = (page - 1) * limit;
 
+  // Инициализируем объект whereCondition
   let whereCondition = {};
+
+  // Добавляем фильтр по категории, если категория указана
   if (category) {
-    whereCondition = { category };
+    whereCondition.souvenirCategoryId = category;  // Предполагается, что это ID категории
+  }
+
+  // Преобразуем строку 'true' или 'false' в логическое значение и применяем фильтр по наличию
+  if (inStockOnly === 'true' || inStockOnly === true) {
+    whereCondition.inStock = true;
   }
 
   try {
     const souvenirs = await Souvenir.findAndCountAll({
+      where: whereCondition,
       include: [
         {
           model: SouvenirCategory,
           as: 'souvenir_category',
-          where: whereCondition
-        }
+        },
       ],
       limit: parseInt(limit),
-      offset: parseInt(offset)
+      offset: parseInt(offset),
     });
 
+    // Возвращаем результат
     return res.json({
       totalItems: souvenirs.count,
       totalPages: Math.ceil(souvenirs.count / limit),
       currentPage: parseInt(page),
-      data: souvenirs.rows
+      data: souvenirs.rows,
     });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Ошибка при получении сувениров' });
   }
 };
+
 
 // Получить сувенир по ID
 exports.getSouvenirById = async (req, res) => {

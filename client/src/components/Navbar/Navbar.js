@@ -34,6 +34,7 @@ function Navbar() {
             <Nav.Link as={Link} to="/guardianship">Опека</Nav.Link>
             <Nav.Link as={Link} to="/tickets">Билеты</Nav.Link>
             <Nav.Link as={Link} to="/news">Новости</Nav.Link>
+            <Nav.Link as={Link} to="/vacancies">Вакансии</Nav.Link>
 
             {token ? (
               <>

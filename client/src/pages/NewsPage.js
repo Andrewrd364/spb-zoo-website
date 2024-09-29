@@ -41,7 +41,7 @@ function NewsPage() {
 
   return (
     <div className="container mt-4">
-      <h1>Новости</h1>
+      <h1 style={{ marginBottom: '50px' }}>Новости</h1>
 
       {/* Фильтр по категориям */}
       <Form className="mb-4">
