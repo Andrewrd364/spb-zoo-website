@@ -9,7 +9,7 @@ const SouvenirCard = ({ souvenir, onClick, isOpen }) => {
         <div className="souvenir-card-container">
             <Card 
                 className="souvenir-card mb-3 d-flex flex-column" 
-                onClick={onClick} // Переключаем состояние при клике
+                onClick={onClick} 
                 style={{ cursor: 'pointer' }} 
             >
                 <Card.Img 

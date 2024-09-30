@@ -1,6 +1,6 @@
 .souvenir-card-container {
     position: relative;
-    max-width: 300px; /* Ограничиваем ширину карточки */
+    max-width: 300px; 
 }
 
 .souvenir-card {
@@ -12,7 +12,7 @@
     background-color: #f8f9fa;
     border-radius: 10px;
     overflow: hidden;
-    height: 350px; /* Фиксируем высоту всех карточек */
+    height: 350px; 
 }
 
 .souvenir-card:hover {
@@ -33,7 +33,7 @@
     text-align: center;
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Устанавливаем правильный отступ между элементами */
+    justify-content: space-between;
     flex-grow: 1;
 }
 
@@ -42,7 +42,6 @@
     font-weight: bold;
     color: #333;
     margin-bottom: 10px;
-    /* Ограничиваем количество строк заголовка */
     display: -webkit-box;
     -webkit-box-orient: vertical;
     overflow: hidden;
@@ -61,8 +60,8 @@
     left: 0;
     width: 100%;
     height: 50%;
-    background-color: rgba(255, 255, 255, 0.5); /* Полупрозрачный белый фон */
-    z-index: 1; /* Поверх карточки */
+    background-color: rgba(255, 255, 255, 0.5); 
+    z-index: 1; 
     padding: 20px;
     box-sizing: border-box;
 }

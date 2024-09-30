@@ -1,6 +1,5 @@
 const { SouvenirCategory } = require('../models/models');
 
-// Получить все категории сувениров
 exports.getAllSouvenirCategories = async (req, res) => {
   try {
     const categories = await SouvenirCategory.findAll();
@@ -11,7 +10,6 @@ exports.getAllSouvenirCategories = async (req, res) => {
   }
 };
 
-// Получить одну категорию по ID
 exports.getSouvenirCategoryById = async (req, res) => {
   const { id } = req.params;
 
@@ -45,7 +43,6 @@ exports.createSouvenirCategory = async (req, res) => {
   }
 };
 
-// Обновить категорию сувениров по ID
 exports.updateSouvenirCategory = async (req, res) => {
   const { id } = req.params;
   const { category } = req.body;
@@ -61,7 +58,7 @@ exports.updateSouvenirCategory = async (req, res) => {
       return res.status(400).json({ message: 'Название категории обязательно для обновления' });
     }
 
-    prevCategory.category = category; // Обновляем только поле имени
+    prevCategory.category = category; 
     await prevCategory.save();
 
     return res.status(200).json(prevCategory);
@@ -70,8 +67,6 @@ exports.updateSouvenirCategory = async (req, res) => {
     return res.status(500).json({ message: 'Ошибка при обновлении категории сувениров' });
   }
 };
-
-// Удалить категорию сувениров по ID
 exports.deleteSouvenirCategory = async (req, res) => {
   const { id } = req.params;
 
@@ -83,7 +78,7 @@ exports.deleteSouvenirCategory = async (req, res) => {
     }
 
     await category.destroy();
-    return res.status(204).json({ message: 'Категория успешно удалена' }); // 204 No Content
+    return res.status(204).json({ message: 'Категория успешно удалена' });
   } catch (error) {
     console.error(error);
     return res.status(500).json({ message: 'Ошибка при удалении категории сувениров' });

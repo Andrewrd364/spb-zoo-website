@@ -1,20 +1,17 @@
-// pages/TicketsPage.js
-
 import React, { useEffect, useState } from 'react';
 import { Table } from 'react-bootstrap';
-import { fetchTickets } from '../services/api';  // Импортируем наш API-запрос
+import { fetchTickets } from '../services/api'; 
 
 function TicketsPage() {
   const [tickets, setTickets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Загружаем билеты при загрузке страницы
   useEffect(() => {
     const loadTickets = async () => {
       try {
         const data = await fetchTickets();
-        setTickets(data.data);  // Сохраняем список билетов
+        setTickets(data.data); 
         setLoading(false);
       } catch (err) {
         setError('Ошибка при загрузке данных');
@@ -25,12 +22,10 @@ function TicketsPage() {
     loadTickets();
   }, []);
 
-  // Если данные еще загружаются
   if (loading) {
     return <p></p>;
   }
 
-  // Если произошла ошибка при загрузке данных
   if (error) {
     return <p>{error}</p>;
   }
@@ -51,8 +46,8 @@ function TicketsPage() {
           {tickets.map(ticket => (
             <tr key={ticket.id}>
               <td>{ticket.name}</td>
-              <td>{ticket.description || 'Нет описания'}</td> {/* Проверка на наличие описания */}
-              <td>{ticket.price !== null ? `${ticket.price}₽` : 'Бесплатно'}</td> {/* Проверка на наличие цены */}
+              <td>{ticket.description || 'Нет описания'}</td> 
+              <td>{ticket.price !== null ? `${ticket.price}₽` : 'Бесплатно'}</td>
             </tr>
           ))}
         </tbody>

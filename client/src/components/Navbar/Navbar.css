@@ -1,22 +1,51 @@
 .custom-navbar {
-    background-color: #b8b06b; /* Используем такой же цвет фона, как и у футера */
-    padding: 10px 0;
-  }
-  
-  .custom-navbar .navbar-nav .nav-link {
-    color: #4d4d33; /* Цвет текста */
-  }
-  
-  .custom-navbar .navbar-brand {
-    color: #4d4d33; /* Цвет бренда */
-  }
-  
-  .custom-navbar .navbar-toggler {
-    border-color: #4d4d33;
-  }
-  
-  .custom-navbar .nav-link:hover, 
-  .custom-navbar .navbar-brand:hover {
-    color: #23261f; /* Темнее при наведении */
-  }
-  
+  background-color: #b8b06b; 
+  padding: 10px 0;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); 
+  font-family: 'Arial', sans-serif;
+}
+
+.custom-navbar .navbar-nav .nav-link {
+  color: #4d4d33; 
+  font-weight: bold;
+  transition: color 0.3s ease; 
+}
+
+.custom-navbar .navbar-brand {
+  color: #4d4d33; 
+  font-size: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+
+.custom-navbar .navbar-toggler {
+  border-color: #4d4d33;
+}
+
+.custom-navbar .nav-link:hover, 
+.custom-navbar .navbar-brand:hover {
+  color: #23261f;
+}
+
+.dropdown-menu {
+  background-color: #fafafa; 
+  border-radius: 5px;
+  padding: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+  border: none;
+}
+
+.dropdown-item {
+  color: #4d4d33; 
+  transition: background-color 0.3s ease;
+}
+
+.dropdown-item:hover {
+  background-color: #e0e0e0; 
+}
+
+.navbar-collapse {
+  justify-content: flex-end;
+}

@@ -6,7 +6,6 @@ import './NewsCard.css';
 import { IMAGE_URL } from '../../config';
 
 const NewsCard = ({ news }) => {
-    // Форматируем дату в формат dd.mm.yyyy
     const formattedDate = new Date(news.createdAt).toLocaleDateString('ru-RU', {
         day: '2-digit',
         month: '2-digit',
@@ -16,12 +15,10 @@ const NewsCard = ({ news }) => {
     return (
         <Link to={`/news/${news.id}`} style={{ textDecoration: 'none' }}>
             <Card className="news-card mb-3 d-flex flex-row align-items-center">
-                {/* Дата слева */}
                 <div className="news-date">
                     {formattedDate}
                 </div>
 
-                {/* Картинка слева */}
                 <Card.Img 
                     variant="left" 
                     src={`${IMAGE_URL}${news.imageUrl}`} 
@@ -29,7 +26,6 @@ const NewsCard = ({ news }) => {
                     className="news-image"
                 />
 
-                {/* Заголовок и текст справа */}
                 <Card.Body className="d-flex flex-column justify-content-center">
                     <Card.Title>{news.title}</Card.Title>
                 </Card.Body>

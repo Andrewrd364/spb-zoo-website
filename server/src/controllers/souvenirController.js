@@ -3,21 +3,17 @@ const fs = require('fs');
 const path = require('path');
 const uuid = require('uuid');
 
-// Получить все сувениры с пагинацией и фильтрацией по категории
 exports.getAllSouvenirs = async (req, res) => {
   const { page = 1, limit = 10, category, inStockOnly = false } = req.query;
   const offset = (page - 1) * limit;
 
-  // Инициализируем объект whereCondition
   let whereCondition = {};
 
-  // Добавляем фильтр по категории, если категория указана
   if (category) {
-    whereCondition.souvenirCategoryId = category;  // Предполагается, что это ID категории
+    whereCondition.souvenirCategoryId = category;  
   }
 
-  // Преобразуем строку 'true' или 'false' в логическое значение и применяем фильтр по наличию
-  if (inStockOnly === 'true' || inStockOnly === true) {
+  if (inStockOnly === "true") {
     whereCondition.inStock = true;
   }
 
@@ -30,11 +26,11 @@ exports.getAllSouvenirs = async (req, res) => {
           as: 'souvenir_category',
         },
       ],
+      order: [['id', 'ASC']],
       limit: parseInt(limit),
       offset: parseInt(offset),
     });
 
-    // Возвращаем результат
     return res.json({
       totalItems: souvenirs.count,
       totalPages: Math.ceil(souvenirs.count / limit),
@@ -47,8 +43,6 @@ exports.getAllSouvenirs = async (req, res) => {
   }
 };
 
-
-// Получить сувенир по ID
 exports.getSouvenirById = async (req, res) => {
   try {
     const souvenir = await Souvenir.findByPk(req.params.id, {
@@ -65,23 +59,20 @@ exports.getSouvenirById = async (req, res) => {
   }
 };
 
-// Создать новый сувенир
 exports.createSouvenir = async (req, res) => {
   const { name, description, inStock, categoryId } = req.body;
-
+  console.log(req.files)
   try {
     let imageUrl = null;
 
-    // Если в запросе есть файл изображения
     if (req.files && req.files.imageUrl) {
       const file = req.files.imageUrl;
       const fileName = uuid.v4() + ".jpg";
       const filePath = path.resolve(__dirname, '..', 'static', fileName);
       await file.mv(filePath);
-      imageUrl = fileName;  // Присваиваем новое имя файла
+      imageUrl = fileName;  
     }
 
-    // Создаем новый сувенир
     const newSouvenir = await Souvenir.create({
       name,
       description,
@@ -97,8 +88,6 @@ exports.createSouvenir = async (req, res) => {
   }
 };
 
-
-// Обновить существующий сувенир
 exports.updateSouvenir = async (req, res) => {
   const { name, description, inStock, categoryId } = req.body;
 
@@ -111,11 +100,9 @@ exports.updateSouvenir = async (req, res) => {
 
     let imageUrl = souvenir.imageUrl;
 
-    // Если передан новый файл изображения
     if (req.files && req.files.imageUrl) {
       const oldFilePath = path.resolve(__dirname, '..', 'static', souvenir.imageUrl);
       
-      // Удаляем старый файл, если он существует
       if (fs.existsSync(oldFilePath)) {
         fs.unlinkSync(oldFilePath);
       }
@@ -124,10 +111,9 @@ exports.updateSouvenir = async (req, res) => {
       const newFileName = uuid.v4() + ".jpg";
       const newFilePath = path.resolve(__dirname, '..', 'static', newFileName);
       await file.mv(newFilePath);
-      imageUrl = newFileName;  // Присваиваем новое имя файла
+      imageUrl = newFileName; 
     }
 
-    // Обновляем сувенир
     await souvenir.update({
       name,
       description,
@@ -142,7 +128,7 @@ exports.updateSouvenir = async (req, res) => {
     return res.status(500).json({ message: 'Ошибка при обновлении сувенира', error });
   }
 };
-// Удалить сувенир
+
 exports.deleteSouvenir = async (req, res) => {
   try {
     const souvenir = await Souvenir.findByPk(req.params.id);
@@ -151,7 +137,6 @@ exports.deleteSouvenir = async (req, res) => {
       return res.status(404).json({ message: 'Сувенир не найден' });
     }
 
-    // Удаляем изображение, если оно существует
     if (souvenir.imageUrl) {
       const filePath = path.resolve(__dirname, '..', 'static', souvenir.imageUrl);
       if (fs.existsSync(filePath)) {
@@ -159,7 +144,6 @@ exports.deleteSouvenir = async (req, res) => {
       }
     }
 
-    // Удаляем сам сувенир
     await souvenir.destroy();
     return res.status(200).json({ message: 'Сувенир успешно удален' });
   } catch (error) {

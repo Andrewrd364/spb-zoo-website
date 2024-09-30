@@ -1,3 +1,4 @@
+// src/App.js
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -16,19 +17,20 @@ import AnimalsPage from "./pages/AnimalsPage";
 import AnimalDetailPage from "./pages/AnimalDetailPage";
 import ServicesPage from "./pages/ServicePage";
 import SouvenirsPage from "./pages/SouvenirsPage"
-import SouvenirDetailPage from "./pages/SouvenirDetailPage"
 import NewsDetailPage from "./pages/NewsDetailPage";
 import EventDetailPage from "./pages/EventDetailPage";
-import VacancyPage from "./pages/VacancyPage"
+import VacancyPage from "./pages/VacancyPage";
+import HomePage from "./pages/HomePage/HomePage";
+
 
 function App() {
   return (
     <Router>
       <div id="root">
         <Navbar />
-
-        <div className="App"> {/* Контент */}
+        <div className="App">
           <Routes>
+            <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/events" element={<EventsPage />} />
             <Route path="/event/:id" element={<EventDetailPage />} />
@@ -45,11 +47,9 @@ function App() {
             <Route path="/animals/:id" element={<AnimalDetailPage />} />
             <Route path="/service/:id" element={<ServicesPage />} />
             <Route path="/souvenirs" element={<SouvenirsPage />} />
-            <Route path="/souvenirs/:id" element={<SouvenirDetailPage />} />
           </Routes>
         </div>
-
-        <Footer /> {/* Футер */}
+        <Footer />
       </div>
     </Router>
   );

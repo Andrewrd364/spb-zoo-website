@@ -1,8 +1,7 @@
-const { Vacancy } = require('../models/models'); // Подключение модели Vacancy
+const { Vacancy } = require('../models/models'); 
 
-// Получение всех вакансий с пагинацией
 exports.getAllVacancies = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query; // Страница и лимит по умолчанию
+  const { page = 1, limit = 10 } = req.query; 
   const offset = (page - 1) * limit;
 
   try {
@@ -12,10 +11,10 @@ exports.getAllVacancies = async (req, res) => {
     });
 
     return res.json({
-      totalItems: vacancies.count, // Общее количество вакансий
-      totalPages: Math.ceil(vacancies.count / limit), // Общее количество страниц
-      currentPage: parseInt(page), // Текущая страница
-      data: vacancies.rows // Список вакансий
+      totalItems: vacancies.count, 
+      totalPages: Math.ceil(vacancies.count / limit), 
+      currentPage: parseInt(page), 
+      data: vacancies.rows 
     });
   } catch (error) {
     console.error(error);
@@ -23,7 +22,6 @@ exports.getAllVacancies = async (req, res) => {
   }
 };
 
-// Получение одной вакансии по ID
 exports.getVacancyById = async (req, res) => {
   const { id } = req.params;
 
@@ -40,7 +38,6 @@ exports.getVacancyById = async (req, res) => {
   }
 };
 
-// Создание новой вакансии
 exports.createVacancy = async (req, res) => {
   const { name, content } = req.body;
 
@@ -53,7 +50,6 @@ exports.createVacancy = async (req, res) => {
   }
 };
 
-// Обновление вакансии
 exports.updateVacancy = async (req, res) => {
   const { id } = req.params;
   const { name, content } = req.body;
@@ -75,7 +71,6 @@ exports.updateVacancy = async (req, res) => {
   }
 };
 
-// Удаление вакансии
 exports.deleteVacancy = async (req, res) => {
   const { id } = req.params;
 

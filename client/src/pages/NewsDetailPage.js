@@ -31,7 +31,6 @@ function NewsDetailPage() {
     return <div>Новость не найдена</div>;
   }
 
-  // Форматирование даты в формат dd.mm.yyyy
   const formattedDate = new Date(news.createdAt).toLocaleDateString('ru-RU', {
     day: '2-digit',
     month: '2-digit',

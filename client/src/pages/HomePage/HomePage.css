@@ -1,0 +1,46 @@
+
+.homepage {
+    display: flex;
+    margin-left: 25%;
+    margin-right: 25%;
+}
+
+.header {
+    width: 100%; 
+    max-width: 1200px;
+    margin-bottom: 20px;
+}
+
+.logo {
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.text-container {
+    max-width: 500px; 
+    text-align: left;
+    margin-top: 20px; 
+}
+
+.header h1 {
+    margin: 0; 
+    font-size: 2rem;
+}
+
+.header p {
+    font-size: 1rem; 
+    line-height: 1.5; 
+}
+
+.animal-slider { 
+    max-width: 2000px;
+    margin-top: 75px; 
+    display: flex; 
+    justify-content: center;
+}
+
+.animal-image {
+    margin-right: 50px;
+    width: auto;
+    height: auto;
+}

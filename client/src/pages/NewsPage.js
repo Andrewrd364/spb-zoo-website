@@ -4,17 +4,15 @@ import NewsCard from "../components/NewsCard/NewsCard";
 import { fetchNews, fetchNewsCategories } from "../services/api"; 
 
 function NewsPage() {
-  const [newsList, setNewsList] = useState([]); // Список новостей
-  const [categories, setCategories] = useState([]); // Список категорий
-  const [selectedCategory, setSelectedCategory] = useState(""); // Выбранная категория
+  const [newsList, setNewsList] = useState([]); 
+  const [categories, setCategories] = useState([]); 
+  const [selectedCategory, setSelectedCategory] = useState(""); 
 
-  // Загружаем новости и категории при загрузке страницы или при изменении категории
   useEffect(() => {
     const loadNews = async () => {
       try {
-        // Получаем все новости с учетом текущей категории
         const newsData = await fetchNews(selectedCategory);
-        setNewsList(newsData.data); // Устанавливаем список новостей
+        setNewsList(newsData.data); 
       } catch (error) {
         console.error("Error fetching news:", error);
       }
@@ -22,28 +20,25 @@ function NewsPage() {
 
     const loadCategories = async () => {
       try {
-        // Загружаем категории новостей
         const categoriesData = await fetchNewsCategories();
-        setCategories(categoriesData); // Устанавливаем список категорий
+        setCategories(categoriesData);
       } catch (error) {
         console.error("Error fetching categories:", error);
       }
     };
 
-    loadNews(); // Загружаем новости
-    loadCategories(); // Загружаем категории
-  }, [selectedCategory]); // Перезагрузка при изменении категории
+    loadNews(); 
+    loadCategories(); 
+  }, [selectedCategory]); 
 
-  // Обработчик изменения категории в фильтре
   const handleCategoryChange = (event) => {
-    setSelectedCategory(event.target.value); // Устанавливаем выбранную категорию
+    setSelectedCategory(event.target.value); 
   };
 
   return (
     <div className="container mt-4">
       <h1 style={{ marginBottom: '50px' }}>Новости</h1>
 
-      {/* Фильтр по категориям */}
       <Form className="mb-4">
         <Form.Group controlId="newsCategoryFilter">
           <Form.Label>Фильтр по категории</Form.Label>
@@ -52,9 +47,8 @@ function NewsPage() {
             value={selectedCategory}
             onChange={handleCategoryChange}
           >
-            {/* Опция для всех категорий */}
             <option value="">Все категории</option>
-            {/* Отображаем категории, загруженные из API */}
+
             {categories.map((category) => (
               <option key={category.id} value={category.id}>
                 {category.category}
@@ -64,7 +58,6 @@ function NewsPage() {
         </Form.Group>
       </Form>
 
-      {/* Отображение новостей */}
       <Row>
         {newsList.map((news) => (
           <Col xs={12} key={news.id} className="mb-3">

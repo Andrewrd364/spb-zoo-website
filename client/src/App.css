@@ -14,7 +14,7 @@ html, body {
   
   .App {
     flex: 1;
-    padding-bottom: 50px; /* Отступ снизу для пространства между контентом и футером */
+    padding-bottom: 50px; 
   }
   
   .footer {

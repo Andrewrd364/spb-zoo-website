@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from "react";
 import { Button, Form, Row, Col } from "react-bootstrap";
-import { fetchAnimals, fetchSpeciesOptions } from "../services/api"; // Adjust the path as needed
-import AnimalCard from "../components/AnimalCard/AnimalCard"; // Import your AnimalCard component
+import { fetchAnimals, fetchSpeciesOptions } from "../services/api"; 
+import AnimalCard from "../components/AnimalCard/AnimalCard";
 
 function AnimalsPage() {
   const [animals, setAnimals] = useState([]);
-  const [speciesFilter, setSpeciesFilter] = useState(""); // For filtering
+  const [speciesFilter, setSpeciesFilter] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
-  const [speciesOptions, setSpeciesOptions] = useState([]); // For species selection
-  const [limit] = useState(8); // Количество животных на странице
+  const [speciesOptions, setSpeciesOptions] = useState([]); 
+  const [limit] = useState(8); 
 
-  // Загружаем животных и список видов при изменении страницы или фильтра
   useEffect(() => {
     const loadAnimals = async () => {
-      const animalData = await fetchAnimals(currentPage, speciesFilter, limit); // Передаем limit
-      setAnimals(animalData.data); // Use the correct data path
+      const animalData = await fetchAnimals(currentPage, speciesFilter, limit); 
+      setAnimals(animalData.data); 
       setTotalPages(animalData.totalPages);
     };
 
     const loadSpeciesOptions = async () => {
       const speciesData = await fetchSpeciesOptions();
-      setSpeciesOptions(speciesData); // Set species options directly
+      setSpeciesOptions(speciesData); 
     };
 
     loadAnimals();
@@ -29,8 +28,8 @@ function AnimalsPage() {
   }, [speciesFilter, currentPage, limit]);
 
   const handleSpeciesChange = (event) => {
-    setSpeciesFilter(event.target.value); // Update species filter
-    setCurrentPage(1); // Reset page on filter change
+    setSpeciesFilter(event.target.value); 
+    setCurrentPage(1); 
   };
 
   const handlePageChange = (newPage) => {
@@ -41,7 +40,6 @@ function AnimalsPage() {
     <div className="container mt-4">
       <h1 style={{ marginBottom: '50px' }}>Животные</h1>
 
-      {/* Filter Form */}
       <Form>
         <Form.Group controlId="speciesFilter">
           <Form.Label>Фильтр по виду</Form.Label>
@@ -60,20 +58,17 @@ function AnimalsPage() {
         </Form.Group>
       </Form>
 
-      {/* Display Animal Cards */}
       <Row className="mt-3">
         {" "}
-        {/* Add margin top */}
+
         {animals.map((animal) => (
           <Col key={animal.id} xs={12} sm={6} md={4} lg={3}>
             {" "}
-            {/* Adjust column sizes */}
             <AnimalCard animal={animal} />
           </Col>
         ))}
       </Row>
 
-      {/* Pagination */}
       <div className="pagination mt-3 d-flex justify-content-center">
         <Button
           onClick={() => handlePageChange(currentPage - 1)}

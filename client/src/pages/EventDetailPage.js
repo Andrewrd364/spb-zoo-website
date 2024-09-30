@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { fetchEventById } from "../services/api";  // Предполагается, что у вас есть этот API метод
+import { fetchEventById } from "../services/api";  
 import { IMAGE_URL } from "../config";
 
 function EventDetailPage() {
@@ -11,7 +11,7 @@ function EventDetailPage() {
   useEffect(() => {
     const loadEvent = async () => {
       try {
-        const eventData = await fetchEventById(id);  // Получаем данные мероприятия по id
+        const eventData = await fetchEventById(id);  
         setEvent(eventData);
       } catch (error) {
         console.error("Ошибка при загрузке данных:", error);
@@ -31,7 +31,6 @@ function EventDetailPage() {
     return <div>Мероприятие не найдено</div>;
   }
 
-  // Форматирование даты мероприятия в формат dd.mm.yyyy
   const formattedDate = new Date(event.date).toLocaleDateString('ru-RU', {
     day: '2-digit',
     month: '2-digit',
@@ -42,7 +41,7 @@ function EventDetailPage() {
     <div className="container mt-5">
       <div className="text-center">
         <img
-          src={`${IMAGE_URL}${event.imageUrl}`}  // URL изображения мероприятия
+          src={`${IMAGE_URL}${event.imageUrl}`} 
           alt={event.title}
           className="img-fluid rounded mb-4"
           style={{
@@ -56,11 +55,11 @@ function EventDetailPage() {
       </div>
       <div className="text-center">
         <h1>{event.title}</h1>
-        <p className="text-muted">{formattedDate}</p> {/* Дата мероприятия */}
+        <p className="text-muted">{formattedDate}</p> 
       </div>
       <div className="mt-4" style={{ maxWidth: "800px", margin: "0 auto" }}>
-        <p>{event.description}</p>  {/* Описание мероприятия */}
-        <p><strong>Цена:</strong> {event.price ? `${event.price}₽` : 'Бесплатно'}</p> {/* Цена мероприятия */}
+        <p>{event.description}</p>
+        <p><strong>Цена:</strong> {event.price ? `${event.price}₽` : 'Бесплатно'}</p>
       </div>
     </div>
   );

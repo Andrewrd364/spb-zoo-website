@@ -1,6 +1,5 @@
 const { NewsCategory } = require('../models/models');
 
-// Получить все категории новостей
 exports.getAllNewsCategories = async (req, res) => {
   try {
     const categories = await NewsCategory.findAll();

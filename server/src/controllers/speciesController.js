@@ -1,5 +1,5 @@
 const {AnimalSpecies } = require('../models/models.js');
-// Получить всех животных
+
 exports.getAllSpecies = async (req, res) => {
     try {
       const species = await AnimalSpecies.findAll();
@@ -10,7 +10,6 @@ exports.getAllSpecies = async (req, res) => {
     }
   };
   
-  // Получить вид животных по ID
   exports.getSpeciesById = async (req, res) => {
     const { id } = req.params;
   
@@ -26,7 +25,6 @@ exports.getAllSpecies = async (req, res) => {
     }
   };
   
-  // Создать новый вид животных
   exports.createSpecies = async (req, res) => {
     const { species } = req.body;
   
@@ -39,7 +37,6 @@ exports.getAllSpecies = async (req, res) => {
     }
   };
   
-  // Обновить вид животных по ID
   exports.updateSpecies = async (req, res) => {
     const { id } = req.params;
     const { species } = req.body;
@@ -58,7 +55,6 @@ exports.getAllSpecies = async (req, res) => {
     }
   };
   
-  // Удалить вид животных по ID
   exports.deleteSpecies = async (req, res) => {
     const { id } = req.params;
   

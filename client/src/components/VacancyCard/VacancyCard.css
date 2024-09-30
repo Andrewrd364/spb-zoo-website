@@ -2,15 +2,15 @@
     border: 1px solid black;
     display: flex;
     transition: transform 0.2s ease-in-out;
-    background-color: #f8f9fa; /* Светлый фон для выделения карточки */
+    background-color: #f8f9fa; 
 }
 
 .vacancy-card:hover {
-    transform: scale(1.02); /* Легкий эффект при наведении */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Добавление тени */
+    transform: scale(1.02);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
 }
 
 .description {
-    margin-top: 10px; /* Space above the description */
-    color: #6c757d; /* Optional: color for description text */
+    margin-top: 10px;
+    color: #6c757d; 
 }

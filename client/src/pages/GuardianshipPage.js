@@ -1,5 +1,3 @@
-// pages/GuardianshipPage.js
-
 import React, { useEffect, useState } from "react";
 import { Table, Image } from "react-bootstrap";
 import { fetchGuardianships } from "../services/api";
@@ -37,8 +35,6 @@ function GuardianshipPage() {
   return (
     <div className="container mt-4">
       <h1 style={{ marginBottom: "50px" }}>Опекуны животных</h1>
-
-      {/* Ограничиваем ширину таблицы и центрируем её */}
       <div
         className="table-container"
         style={{ maxWidth: "800px", margin: "0 auto" }}
@@ -57,7 +53,6 @@ function GuardianshipPage() {
                   className="align-middle text-center"
                   style={{ width: "50%" }}
                 >
-                  {/* Ограничиваем ширину карточки животного */}
                   <div style={{ maxWidth: "300px", margin: "0 auto" }}>
                     <AnimalCard animal={guardian.animal} />
                   </div>
@@ -66,7 +61,6 @@ function GuardianshipPage() {
                   className="align-middle text-center"
                   style={{ width: "50%" }}
                 >
-                  {/* Логика отображения опекуна */}
                   {guardian.guardianImg && guardian.guardianUrl ? (
                     <div>
                       <a

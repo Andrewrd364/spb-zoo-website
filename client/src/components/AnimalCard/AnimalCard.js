@@ -1,8 +1,8 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Card } from 'react-bootstrap';
-import { Link } from 'react-router-dom'; // Import Link for navigation
-import './AnimalCard.css'; // Import the CSS file
+import { Link } from 'react-router-dom'; 
+import './AnimalCard.css'; 
 import { IMAGE_URL } from '../../config';
 
 const AnimalCard = ({ animal }) => {

@@ -31,7 +31,6 @@ function AnimalDetailPage() {
     return <div>Животное не найдено</div>;
   }
 
-  // Проверка наличия новостей и мероприятий
   const hasNewsOrEvents = (animal.news && animal.news.length > 0) || (animal.events && animal.events.length > 0);
 
   return (
@@ -65,19 +64,17 @@ function AnimalDetailPage() {
         </div>
       </div>
 
-      {/* Секция новостей и мероприятий */}
       {hasNewsOrEvents && (
         <div className="mt-5" style={{ maxWidth: "1000px", width: "100%" }}>
           <h2 className="text-center mb-4">Новости и мероприятия, связанные с этим животным</h2>
           <ul className="list-group">
-            {/* Новости */}
+
             {animal.news.map((newsItem) => (
               <li key={newsItem.id} className="list-group-item">
                 <Link to={`/news/${newsItem.id}`}>{newsItem.title} (Новость)</Link>
               </li>
             ))}
 
-            {/* Мероприятия */}
             {animal.events.map((eventItem) => (
               <li key={eventItem.id} className="list-group-item">
                 <Link to={`/event/${eventItem.id}`}>{eventItem.title} (Мероприятие)</Link>

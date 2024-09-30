@@ -1,14 +1,14 @@
 const { Ticket } = require('../models/models');
 
-// Получить все билеты с пагинацией
 exports.getAllTickets = async (req, res) => {
-  const { page = 1, limit = 10 } = req.query; // Пагинация по умолчанию
+  const { page = 1, limit = 100 } = req.query; 
   const offset = (page - 1) * limit;
 
   try {
     const tickets = await Ticket.findAndCountAll({
       limit: parseInt(limit),
       offset: parseInt(offset),
+      order: [['id', 'ASC']]
     });
 
     return res.json({
@@ -23,7 +23,6 @@ exports.getAllTickets = async (req, res) => {
   }
 };
 
-// Получить билет по ID
 exports.getTicketById = async (req, res) => {
   try {
     const ticket = await Ticket.findByPk(req.params.id);
@@ -39,14 +38,13 @@ exports.getTicketById = async (req, res) => {
   }
 };
 
-// Создать новый билет
 exports.createTicket = async (req, res) => {
   const { name, description = null, price } = req.body;
 
   try {
     const newTicket = await Ticket.create({
       name,
-      description: description || null, // Присваиваем null, если description не указано или пусто
+      description: description || null, 
       price: price || null,
     });
 
@@ -57,7 +55,6 @@ exports.createTicket = async (req, res) => {
   }
 };
 
-// Обновить билет по ID
 exports.updateTicket = async (req, res) => {
   const { name, description = null, price } = req.body;
 
@@ -70,7 +67,7 @@ exports.updateTicket = async (req, res) => {
 
     await ticket.update({
       name,
-      description: description || null, // Присваиваем null, если description не указано или пусто
+      description: description || null, 
       price: price || null,
     });
 
@@ -81,7 +78,6 @@ exports.updateTicket = async (req, res) => {
   }
 };
 
-// Удалить билет по ID
 exports.deleteTicket = async (req, res) => {
   try {
     const ticket = await Ticket.findByPk(req.params.id);
