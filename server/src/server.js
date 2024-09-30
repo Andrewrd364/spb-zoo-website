@@ -8,16 +8,9 @@ const path = require('path')
 
 const app = express();
 const PORT = process.env.PORT || 5000;
-
-const corsOptions = {
-    origin: process.env.FRONTEND,  // Ваш фронтенд-домен
-    methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true
-  };
   
-app.use(cors(corsOptions));
 app.use(express.json());
+app.use(cors());
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}));
 app.use('/api', router)
