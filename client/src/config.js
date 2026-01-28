@@ -1,3 +1,3 @@
-// src/constants.js
-export const IMAGE_URL = "https://spb-zoo-website-production.up.railway.app/";
-export const API_URL = IMAGE_URL + 'api';
+// src/config.js
+export const API_URL = process.env.REACT_APP_API_URL + "api"
+export const IMAGE_URL = process.env.REACT_APP_API_URL

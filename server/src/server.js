@@ -10,7 +10,14 @@ const app = express();
 const PORT = process.env.PORT || 5000;
   
 app.use(express.json());
-app.use(cors());
+const corsOptions = {
+  origin: '*', // Временно разрешаем все домены
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'Accept']
+};
+
+app.use(cors(corsOptions));
 app.use(express.static(path.resolve(__dirname, 'static')))
 app.use(fileUpload({}));
 app.use('/api', router)
@@ -21,9 +28,9 @@ const start = async () => {
         await sequelize.sync();
         // await sequelize.sync({ force: true });
 
-        app.listen(PORT, () => {
+        app.listen(PORT, '0.0.0.0', () => {
             console.log(`Сервер запущен на порту ${PORT}`);
-          });
+        });
     } catch(e){
         console.log(e)
     }
