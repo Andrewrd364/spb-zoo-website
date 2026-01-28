@@ -1,19 +1,24 @@
 
 services:
   db:
-    image: postgres:17
+    build: ./postgres
     container_name: postgres
     restart: always
     environment:
       POSTGRES_DB: spb_zoo
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: visagemain0364
+      POSTGRES_HOST_AUTH_METHOD: trust  # Для упрощения
     volumes:
-      - postgres_data:/var/lib/postgresql/data
-      - ./server/src/models/sbp_zoo_dump.backup:/docker-entrypoint-initdb.d/sbp_zoo_dump.backup
-      - ./server/src/models/restore.sh:/docker-entrypoint-initdb.d/restore.sh
+    - postgres_data:/var/lib/postgresql/data
     ports:
-      - "5432:5432"
+    - "5432:5432"
+  # Добавляем healthcheck
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   server:
     build: ./server
@@ -22,7 +27,8 @@ services:
     env_file:
       - ./server/.env
     depends_on:
-      - db
+      db:
+        condition: service_healthy  # Ждем, пока БД будет готова
     ports:
       - "5000:5000"
 
