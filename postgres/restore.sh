@@ -1,17 +1,15 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
-echo "⏳ Ожидание запуска PostgreSQL..."
-sleep 5
+echo "📦 Restoring database..."
 
-echo "📦 Восстановление базы данных из бэкапа..."
 pg_restore \
   --no-owner \
   --no-privileges \
   --clean \
   --if-exists \
-  -U postgres \
-  -d spb_zoo \
+  -U "$POSTGRES_USER" \
+  -d "$POSTGRES_DB" \
   /docker-entrypoint-initdb.d/sbp_zoo_dump.backup
 
-echo "✅ База данных успешно восстановлена"
+echo "✅ Database restored"
